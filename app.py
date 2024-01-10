@@ -6,22 +6,20 @@ from datetime import datetime
 import random
 import string
 
-
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://leandro:leandro99@localhost/db'
+db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'leandro99'
 
-db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
+    password = db.Column(db.String(255))
     is_admin = db.Column(db.Boolean, default=False)
-    
+
+    def __repr__(self):
+        return f'<User {self.username}>'
 
 class Key(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +29,12 @@ class Key(db.Model):
     data_hora = db.Column(db.DateTime)
     cliente = db.Column(db.String(150))
 
-        
+# LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'  # Nome da função de visualização que lida com logins
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -184,11 +187,9 @@ def download_chave(key_id):
     )
 
 
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
 
-if __name__ == '__main__':
-    init_db()  # Inicializa o banco de dados antes de iniciar o aplicativo
-    app.run(debug=True)
