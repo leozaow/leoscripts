@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <title>Gerar Chave</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerar Nova Chave</h1>
+        <form action="{{ url_for('generate_key') }}" method="post" class="form-group">
+            <label for="contrachave">Contrachave:</label>
+            <input type="text" name="contrachave" id="contrachave" class="form-control"><br>
+            
+            <label for="cliente">Cliente:</label>
+            <input type="text" name="cliente" id="cliente" class="form-control"><br>
+            
+            <input type="submit" value="Gerar Chave" class="btn">
+        </form>
+        <a href="{{ url_for('dashboard') }}" class="btn">Voltar para o Dashboard</a>
+    </div>
+</body>
+</html>
