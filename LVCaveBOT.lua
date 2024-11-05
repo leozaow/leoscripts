@@ -11,7 +11,7 @@ local os = require("os")
 
 local chaveDeAcesso = chave
 local scriptEsperado = script
-local versao_rev = "8.8.0-23/04"
+local versao_rev = "05/11/2024"
 local verificado = false
 
 local function verificarAutenticacao()
@@ -859,6 +859,7 @@ function onInternalMagicEffect(type, x, y, z)
                             cooldownTicksTp = cooldownLimitTp
                             Sound.play(soundDir)
                             Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | [Effect] You have been teleported!")
+                            print("LVAlarm: " .. estadoMensagem .. " | [Effect] You have been teleported!")
                             wait(3000)
                         end
                     end
@@ -880,16 +881,19 @@ function onInternalMagicEffect(type, x, y, z)
             if contains(EffectsToAlarm, type) and EffectsAlarm then
                 Sound.play(soundDir)
                 Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
+                print("LVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
             end
 
             if contains(EffectsToWalk, type) and EffectsWalk then
                 stopForMagicEffect = true
                 passinhoDoMalandro(x, y, z)
                 Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
+                print("LVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
             elseif hasBonusEffectOnStep and contains(bonusEffectsOnStep, type) then
                 stopForMagicEffect = true
                 passinho(x, y, z)
                 Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
+                print("LVAlarm: " .. estadoMensagem .. " | MagicEffect Type: " .. tostring(type) .. " | Pos: (" .. x .. ", " .. y .. ", " .. z .. ")")
             else
                 stopForMagicEffect = false
             end
@@ -929,12 +933,14 @@ function handleGMChat(authorName, x, y, z)
         if GMchatAlarm then
             Sound.play(soundDir)
 			Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | Chat Author: " .. tostring(authorName) .. " | Pos: (" .. tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z) .. ")")
+            print("LVAlarm: " .. estadoMensagem .. " | Chat Author: " .. tostring(authorName) .. " | Pos: (" .. tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z) .. ")")
        end
 
         if GMchatWalk then
             stopForMagicEffect = true
             passinhoDoMalandro(x, y, z)
 			Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | Chat Author: " .. tostring(authorName) .. " | Pos: (" .. tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z) .. ")")
+            print("LVAlarm: " .. estadoMensagem .. " | Chat Author: " .. tostring(authorName) .. " | Pos: (" .. tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z) .. ")")
         else
             stopForMagicEffect = false
         end
@@ -1041,6 +1047,7 @@ function checkForItems()
             shouldStopForItem = true
             Map.goTo(itemPositionWalk.x, itemPositionWalk.y, itemPositionWalk.z)
             Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | Walking to Item: (" .. itemIdWalk .. ", " .. itemPositionWalk.x .. ", " .. itemPositionWalk.y .. ", " .. itemPositionWalk.z .. ")")
+            print("LVAlarm: " .. estadoMensagem .. " | Walking to Item: (" .. itemIdWalk .. ", " .. itemPositionWalk.x .. ", " .. itemPositionWalk.y .. ", " .. itemPositionWalk.z .. ")")
         end
 
         -- Alarme apenas se o item está na mesma posição Z
@@ -1049,6 +1056,7 @@ function checkForItems()
                 cooldownTicksItems = cooldownLimitItems
                 Sound.play(soundDir)
                 Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | Alarm for Item: (" .. itemIdAlarm .. ", " .. itemPositionAlarm.x .. ", " .. itemPositionAlarm.y .. ", " .. itemPositionAlarm.z .. ")")
+                print("LVAlarm: " .. estadoMensagem .. " | Alarm for Item: (" .. itemIdAlarm .. ", " .. itemPositionAlarm.x .. ", " .. itemPositionAlarm.y .. ", " .. itemPositionAlarm.z .. ")")
             end
             if itemsAlarmStop then
                 shouldStopForItem = true
@@ -1163,6 +1171,7 @@ Timer("PathFinding...", function()
 				if destination and type(destination) == "table" and destination.x and destination.y and destination.z then
 				Map.goTo(destination.x, destination.y, destination.z)
 				Client.showMessage("[AntiKS] Recuperando rota, aguarde chegar ao local.")
+                print("Recuperando rota.")
 				wait(4000) -- Ajuste o tempo de espera conforme necessário
 				end
 				end
@@ -1231,6 +1240,7 @@ Timer("PathFinding...", function()
 						
                     Map.goTo(destination.x, destination.y, destination.z)
 					Client.showMessage("[Walker 1] Recuperando rota, aguarde chegar ao local.")
+                    print("Recuperando rota.")
 					wait(4000)
 					-- Ajuste o tempo de espera conforme necessário
                 else
@@ -1241,6 +1251,7 @@ Timer("PathFinding...", function()
 				if destination and type(destination) == "table" and destination.x and destination.y and destination.z then
 				Map.goTo(destination.x, destination.y, destination.z)
 				Client.showMessage("[Walker 2] Recuperando rota, aguarde chegar ao local.")
+                print("Recuperando rota.")
 				wait(4000) -- Ajuste o tempo de espera conforme necessário
 				else
 				print("Destino inválido para Map.goTo")
@@ -1294,12 +1305,14 @@ local function recordPosition()
     local player = Creature(Player.getId())
     if not player then
 		Client.showMessage("Erro: Jogador nao encontrado.")
+        print("Erro: Jogador nao encontrado.")
         return
     end
 
     local pos = player:getPosition()
     if not pos or pos.x == nil or pos.y == nil or pos.z == nil then
 		Client.showMessage("Erro: nao foi possível obter a posicao do jogador.")
+        print("Erro: nao foi possível obter a posicao do jogador.")
         return
     end
 
@@ -1316,6 +1329,7 @@ local function recordPosition()
 
         else
 			Client.showMessage("Erro: nao foi possível abrir o arquivo.")
+            print("Erro: nao foi possível abrir o arquivo.")
         end
     end
 end
@@ -1333,10 +1347,12 @@ local function recordInitialPosition()
             Client.showMessage(coordinatesText) -- Opcional: Mostra a mensagem no cliente
         else
             Client.showMessage("Erro: Jogador nao encontrado.")
+            print("Erro: Jogador nao encontrado.")
         end
         file:close()
     else
         Client.showMessage("Erro: nao foi possível abrir o arquivo para gravar a posicao inicial.")
+        print("Erro: nao foi possível abrir o arquivo para gravar a posicao inicial.")
     end
 end
 
@@ -1377,23 +1393,26 @@ hudIcon:setCallback(function()
     updateHUD()
 end)
 
-function onInternalTalkCombined(authorName, authorLevel, type, x, y, z, text)
-    if Player and Player.getName and authorName then
-        if authorName:lower() == Player.getName():lower() then
+function onInternalTalkCombined(authorName, authorLevel, messageType, x, y, z, text)
+    -- Verifica se Player e suas funções estão disponíveis
+    if Player and Player.getName and type(text) == "string" and type(authorName) == "string" then
+        local playerName = Player.getName()
+        if playerName and authorName:lower() == playerName:lower() then
             onColorMentioned(text)
-            return 
+            return
         end
     else
-        print("Erro: 'Player' ou 'authorName' é nil.")
+        --print("Erro: 'Player', 'authorName', ou 'text' é nil ou inválido.")
         return
     end
 
-    if authorLevel and authorLevel ~= 0 then
-        if type == 1 or type == 2 or type == 3 or type == 4 or type == 36 then
+    -- Verifica se o autor tem nível válido e tipo de chat esperado
+    if type(authorLevel) == "number" and authorLevel > 0 then
+        if messageType == 1 or messageType == 2 or messageType == 3 or messageType == 4 or messageType == 36 then
             handleGMChat(authorName, x, y, z)
         end
     else
-        print("Erro: 'authorLevel' é nil ou igual a 0.")
+        --print("Erro: 'authorLevel' é nil ou igual a 0.")
     end
 end
 
@@ -1451,6 +1470,7 @@ function checkTeleport()
         cooldownTicksTp = cooldownLimitTp
         Sound.play(soundDir)
         Client.showMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLVAlarm: " .. estadoMensagem .. " | Teleport Detected: Moved " .. distance .. " SQMs!")
+        print("LVAlarm: " .. estadoMensagem .. " | Teleport Detected: Moved " .. distance .. " SQMs!")
         wait(3000)
     end
 end
